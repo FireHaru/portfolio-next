@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nguyễn Nhật Đăng — Portfolio
 
-## Getting Started
+Portfolio giới thiệu Nguyễn Nhật Đăng, sinh viên Vật lý tin học quan tâm đến AI, dữ liệu và phát triển web. Trang web tổng hợp kỹ năng, dự án, hoạt động và thành tích, đồng thời cung cấp biểu đồ dữ liệu và biểu mẫu liên hệ. Dự án được xây dựng bằng Next.js App Router và hiển thị bằng tiếng Việt.
 
-First, run the development server:
+## Liên kết
+
+- **Production:** Chưa có URL production được cấu hình.
+- **Tài khoản demo:** Không cần đăng nhập; ứng dụng hiện không có chức năng xác thực người dùng.
+- **Mã nguồn:** [FireHaru/portfolio-next](https://github.com/FireHaru/portfolio-next)
+
+## Ảnh chụp màn hình
+
+### Trang chủ
+
+![Trang chủ portfolio](public/readme/home.png)
+
+### Danh sách dự án
+
+![Trang danh sách dự án](public/readme/projects.png)
+
+## Công nghệ chính
+
+| Công nghệ | Phiên bản |
+| --- | --- |
+| Node.js | 24 |
+| Next.js | 16.4.6 |
+| React / React DOM | 19.3.0 |
+| TypeScript | 5.9.3 |
+| Tailwind CSS | 4.3.3 |
+| ESLint | 9.39.5 |
+| Radix UI | 1.8.1 |
+
+## Checklist tính năng
+
+Checklist này tổng hợp các tính năng hiện có trong repository; đề bài chưa cung cấp rubric riêng.
+
+- ✅ Các mục giới thiệu, kỹ năng, dự án, hoạt động, thành tích và liên hệ.
+- ✅ Tìm kiếm, lọc theo công nghệ và sắp xếp tên các dự án nổi bật.
+- ✅ Trang danh sách tất cả dự án và trang chi tiết từng dự án.
+- ✅ Biểu đồ dữ liệu cho phép chọn điểm đo và điều chỉnh số điểm hiển thị.
+- ✅ Chuyển đổi giao diện sáng/tối.
+- ✅ Hiển thị các repository công khai từ GitHub.
+- ✅ Kiểm tra dữ liệu biểu mẫu liên hệ và gửi tin nhắn qua FormSubmit.
+- ❌ Chưa có kiểm thử tự động bằng Vitest hoặc Playwright.
+
+## Chạy dự án trên máy cá nhân
+
+Cần Node.js 24 và npm. Đây là portfolio frontend, không sử dụng cơ sở dữ liệu, Prisma hoặc biến môi trường; vì vậy repository hiện không có `.env.example` hay lệnh migrate/seed.
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Chạy kiểm thử và kiểm tra
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Hiện tại, `package.json` chỉ định nghĩa lệnh lint:
 
-## Learn More
+```bash
+npm run lint
+```
 
-To learn more about Next.js, take a look at the following resources:
+Các package cần thiết để chạy `npx vitest run` và `npx playwright test` chưa được cài đặt; `package.json` cũng chưa có script kiểm thử. Lệnh `npm run typecheck` chưa được định nghĩa.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Quyết định kỹ thuật và giới hạn đã biết
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Dự án sử dụng Next.js App Router; dữ liệu dự án được lưu trực tiếp trong mã nguồn, không dùng cơ sở dữ liệu.
+- Mục repository GitHub lấy dữ liệu từ GitHub API và cần kết nối internet.
+- Biểu mẫu liên hệ gửi tin nhắn qua dịch vụ bên thứ ba FormSubmit; việc gửi phụ thuộc vào kết nối mạng và tình trạng hoạt động của dịch vụ.
+- Repository chưa có URL production được xác nhận hoặc tài khoản demo.
 
-## Deploy on Vercel
+## Nhật ký sử dụng AI
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Xem tóm tắt các thay đổi và việc sử dụng AI tại [AI_LOG.md](AI_LOG.md).
