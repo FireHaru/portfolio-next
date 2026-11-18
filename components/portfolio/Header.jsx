@@ -2,26 +2,30 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle.jsx';
 
 const navigation = [
   ['about', 'Về mình', '/#about'],
   ['skills', 'Kỹ năng', '/#skills'],
-  ['projects', 'Dự án', '/#projects'],
+  ['projects', 'Dự án'],
   ['measurements', 'Số liệu', '/#measurements'],
   ['activities', 'Hoạt động', '/#activities'],
   ['achievements', 'Thành tích', '/#achievements'],
   ['repositories', 'Repo', '/#repositories'],
   ['contact', 'Liên hệ', '/#contact'],
-  ['projects-page', 'Danh sách dự án', '/projects'],
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(false);
 
   useEffect(() => {
     function closeOnEscape(event) {
-      if (event.key === 'Escape') setMenuOpen(false);
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        setProjectsOpen(false);
+      }
     }
 
     document.addEventListener('keydown', closeOnEscape);
@@ -40,8 +44,57 @@ export default function Header() {
         className={menuOpen ? 'site-nav is-open' : 'site-nav'}
         aria-label="Điều hướng chính"
       >
-        {navigation.map(([id, label, href]) => (
-          <Link key={id} href={href} onClick={() => setMenuOpen(false)}>
+        {navigation.map(([id, label, href]) => id === 'projects' ? (
+          <details
+            key={id}
+            className="nav-dropdown"
+            open={projectsOpen}
+            onToggle={(event) => setProjectsOpen(event.currentTarget.open)}
+            onPointerEnter={(event) => {
+              if (event.pointerType === 'mouse') setProjectsOpen(true);
+            }}
+            onPointerLeave={(event) => {
+              if (event.pointerType === 'mouse') setProjectsOpen(false);
+            }}
+          >
+            <summary
+              className="nav-dropdown-trigger"
+              aria-expanded={projectsOpen}
+              onClick={(event) => {
+                if (
+                  event.nativeEvent.detail > 0
+                  && window.matchMedia('(hover: hover)').matches
+                ) {
+                  event.preventDefault();
+                }
+              }}
+            >
+              {label}
+            </summary>
+            <div className="nav-dropdown-menu">
+              <Link href="/#projects" onClick={() => {
+                setMenuOpen(false);
+                setProjectsOpen(false);
+              }}>
+                Dự án nổi bật
+              </Link>
+              <Link href="/projects" onClick={() => {
+                setMenuOpen(false);
+                setProjectsOpen(false);
+              }}>
+                Danh sách dự án
+              </Link>
+            </div>
+          </details>
+        ) : (
+          <Link
+            key={id}
+            href={href}
+            onClick={() => {
+              setMenuOpen(false);
+              setProjectsOpen(false);
+            }}
+          >
             {label}
           </Link>
         ))}
@@ -57,7 +110,7 @@ export default function Header() {
           aria-controls="primary-navigation"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? '×' : '☰'}
+          {menuOpen ? <X size={18} strokeWidth={1.75} aria-hidden="true" /> : '☰'}
         </button>
       </div>
     </header>

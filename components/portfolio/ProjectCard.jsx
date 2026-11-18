@@ -1,7 +1,26 @@
-export default function ProjectCard({ project, onOpen }) {
+import Link from 'next/link';
+
+/** @typedef {import('../../data/projects.js').projects[number]} Project */
+
+/**
+ * @param {{
+ *   project: Project,
+ *   onOpen?: (project: Project) => void,
+ *   href?: string,
+ * }} props
+ */
+export default function ProjectCard({ project, onOpen, href }) {
+  const handleOpen = () => {
+    if (!onOpen) {
+      throw new Error('ProjectCard requires onOpen when href is not provided.');
+    }
+
+    onOpen(project);
+  };
+
   return (
     <article
-      className="min-w-0 overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] shadow-sm transition hover:-translate-y-1 hover:border-[color:var(--accent)] dark:bg-slate-800"
+      className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] shadow-sm transition hover:-translate-y-1 hover:border-[color:var(--accent)] dark:bg-slate-800"
     >
       <div className="project-art" aria-hidden="true">
         <span>{String(project.id).padStart(2, '0')}</span>
@@ -16,14 +35,20 @@ export default function ProjectCard({ project, onOpen }) {
         <ul className="tag-list">
           {project.tags.map((tag) => <li key={tag}>{tag}</li>)}
         </ul>
-        <button
-          className="project-detail-button"
-          type="button"
-          onClick={() => onOpen(project)}
-          aria-label={`Xem chi tiết ${project.title}`}
-        >
-          Khám phá dự án <span aria-hidden="true">↗</span>
-        </button>
+        {href ? (
+          <Link className="project-detail-button" href={href} aria-label={`Xem chi tiết ${project.title}`}>
+            Khám phá dự án <span aria-hidden="true">↗</span>
+          </Link>
+        ) : (
+          <button
+            className="project-detail-button"
+            type="button"
+            onClick={handleOpen}
+            aria-label={`Xem chi tiết ${project.title}`}
+          >
+            Khám phá dự án <span aria-hidden="true">↗</span>
+          </button>
+        )}
       </div>
     </article>
   );

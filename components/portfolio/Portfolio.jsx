@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { projects } from '../../data/projects.js';
 import { series } from '../../data/measurements.js';
 import LineChart from './LineChart.jsx';
@@ -8,7 +9,8 @@ import ProjectList from './ProjectList.jsx';
 import TagFilter from './TagFilter.jsx';
 import ProjectDialog from './ProjectDialog.jsx';
 
-const tags = [...new Set(projects.flatMap((project) => project.tags))];
+const featuredProjects = projects.slice(0, 4);
+const tags = [...new Set(featuredProjects.flatMap((project) => project.tags))];
 
 function normalize(value) {
   return value
@@ -32,7 +34,7 @@ export default function Portfolio() {
     points.reduce((sum, point) => sum + point, 0) / points.length
   ).toFixed(1);
   const normalizedQuery = normalize(query.trim());
-  const shownProjects = projects
+  const shownProjects = featuredProjects
     .filter((project) => activeTag === 'all' || project.tags.includes(activeTag))
     .filter((project) => normalize(
       [project.title, project.category, project.description, ...project.tags].join(' '),
@@ -45,11 +47,11 @@ export default function Portfolio() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">02 — KHÔNG GIAN THỬ NGHIỆM</p>
-            <h2>Một vài dự án của mình</h2>
+            <h2>Dự án nổi bật</h2>
           </div>
-          <a className="text-link" href="https://github.com/FireHaru" target="_blank" rel="noreferrer">
-            Ghé GitHub ↗
-          </a>
+          <Link className="text-link" href="/projects">
+            Xem tất cả dự án ↗
+          </Link>
         </div>
 
         <div className="project-controls">
@@ -73,7 +75,7 @@ export default function Portfolio() {
         </div>
         <TagFilter tags={tags} activeTag={activeTag} onChange={setActiveTag} />
         <p className="result-count" role="status" aria-live="polite">
-          Hiển thị {shownProjects.length} / {projects.length} dự án
+          Hiển thị {shownProjects.length} / {featuredProjects.length} dự án nổi bật
         </p>
         {shownProjects.length > 0 ? (
           <ProjectList projects={shownProjects} onOpen={setSelectedProject} />
